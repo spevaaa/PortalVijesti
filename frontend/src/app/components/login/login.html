@@ -1,0 +1,25 @@
+<div class="login-container">
+  <form (submit)="onLogin()" class="login-form">
+    <h2>Prijava u sustav</h2>
+
+    <div *ngIf="errorMessage" class="error-badge">
+      {{ errorMessage }}
+    </div>
+
+    <div class="input-group">
+      <label>Email adresa</label>
+      <input type="email" [(ngModel)]="credentials.email" name="email" required>
+    </div>
+
+    <div class="input-group">
+      <label>Lozinka</label>
+      <input type="password" [(ngModel)]="credentials.password" name="password" required>
+    </div>
+
+    <button type="submit">Prijavi se</button>
+
+    <p class="register-link">
+      Nemate račun? <a routerLink="/register">Registrirajte se ovdje</a>
+    </p>
+  </form>
+</div>

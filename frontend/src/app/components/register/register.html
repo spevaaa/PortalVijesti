@@ -1,0 +1,43 @@
+<div class="register-container">
+  <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="register-form">
+    <h2>Izradi račun</h2>
+
+    <div *ngIf="errorMessage" class="error-badge">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-badge">{{ successMessage }}</div>
+
+    <div class="input-group">
+      <label>Korisničko ime</label>
+      <input type="text" [(ngModel)]="userData.username" name="username" 
+             #username="ngModel" required minlength="3">
+      <small class="error-text" *ngIf="username.invalid && (username.dirty || username.touched)">
+        <span *ngIf="username.errors?.['required']">Korisničko ime je obvezno.</span>
+        <span *ngIf="username.errors?.['minlength']">Mora imati barem 3 znaka.</span>
+      </small>
+    </div>
+
+    <div class="input-group">
+      <label>Email adresa</label>
+      <input type="email" [(ngModel)]="userData.email" name="email" 
+             #email="ngModel" required email>
+      <small class="error-text" *ngIf="email.invalid && (email.dirty || email.touched)">
+        Unesite ispravnu email adresu.
+      </small>
+    </div>
+
+    <div class="input-group">
+      <label>Lozinka</label>
+      <input type="password" [(ngModel)]="userData.password" name="password" 
+             #password="ngModel" required minlength="8">
+      <small class="error-text" *ngIf="password.invalid && (password.dirty || password.touched)">
+        <span *ngIf="password.errors?.['required']">Lozinka je obvezna.</span>
+        <span *ngIf="password.errors?.['minlength']">Lozinka mora imati barem 8 znakova.</span>
+      </small>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">Registriraj se</button>
+
+    <p class="login-link">
+      Već imate račun? <a routerLink="/login">Prijavite se ovdje</a>
+    </p>
+  </form>
+</div>

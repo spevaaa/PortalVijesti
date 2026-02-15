@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Najnovije Vijesti</h1>
+  <div class="news-grid">
+    @for (item of allNews; track item.id) {
+      <div class="news-card">
+        <img [src]="item.image_url || 'assets/placeholder.jpg'" alt="News image">
+        <div class="card-content">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.content | shortenText:75 }}</p>
+          <a [routerLink]="['/news', item.id]" class="read-more">Pročitaj više</a>
+        </div>
+      </div>
+    }
+  </div>
+</div>

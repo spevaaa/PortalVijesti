@@ -1,0 +1,72 @@
+<div class="admin-container">
+  <h1>Administracija</h1>
+
+  <section class="form-section">
+    <h2>{{ editId ? 'Uredi vijest' : 'Dodaj novu vijest' }}</h2>
+
+    <div *ngIf="message" class="info-message">{{ message }}</div>
+
+    <form [formGroup]="newsForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Naslov</label>
+        <input type="text" formControlName="title">
+        <small *ngIf="newsForm.get('title')?.invalid && newsForm.get('title')?.touched">
+          Naslov mora imati barem 5 znakova.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Kategorija</label>
+        <select formControlName="category_id">
+          <option value="">Odaberi kategoriju</option>
+          <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>URL Slike</label>
+        <input type="text" formControlName="image_url">
+      </div>
+
+      <div class="form-group">
+        <label>Sadržaj</label>
+        <textarea formControlName="content" rows="5"></textarea>
+        <small *ngIf="newsForm.get('content')?.invalid && newsForm.get('content')?.touched">
+          Sadržaj mora imati barem 20 znakova.
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="newsForm.invalid">
+        {{ editId ? 'Ažuriraj vijest' : 'Spremi vijest' }}
+      </button>
+      
+      <button type="button" *ngIf="editId" (click)="resetForm()" style="background: #95a5a6; margin-left: 10px;">
+        Odustani
+      </button>
+
+    </form>
+  </section>
+
+  <section class="list-section">
+    <h2>Upravljanje vijestima</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Naslov</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of allNews">
+          <td>{{ n.id }}</td>
+          <td>{{ n.title }}</td>
+          <td>
+            <button class="delete-btn" (click)="deleteNews(n.id)">Obriši</button>
+            <button (click)="editNews(n)">Uredi</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

@@ -1,0 +1,45 @@
+<div class="container" *ngIf="news">
+  <article class="news-article">
+    <header>
+      <h1>{{ news.title }}</h1>
+      <p class="meta">Objavljeno: {{ news.created_at | date:'dd.MM.yyyy HH:mm' }}</p>
+    </header>
+
+    <img *ngIf="news.image_url" [src]="news.image_url" class="hero-img">
+
+    <div class="content">
+      {{ news.content }}
+    </div>
+  </article>
+
+  <hr class="separator">
+
+  <section class="comments-section">
+    
+  <h3>Komentari ({{ comments.length }})</h3>
+  
+  <div *ngFor="let c of comments" class="comment-card">
+    <strong>Od korisnika: {{ c.username }}</strong>
+    <br>objavljeno: <small>{{ c.created_at | customDatePipe }}</small>
+    <p>{{ c.text }}</p>
+
+    <button *ngIf="currentUserId === c.user_id" (click)="deleteComment(c.id)">
+      Obriši
+    </button>
+  </div>
+
+  <div *ngIf="comments.length === 0">
+    Još nema komentara. Budite prvi!
+  </div>
+
+    <div class="comment-form" *ngIf="isLoggedIn; else loginMsg">
+      <h4>Ostavite komentar:</h4>
+      <textarea [(ngModel)]="newCommentText" placeholder="Napišite komentar."></textarea>
+      <button (click)="addComment()">Objavi komentar</button>
+    </div>
+
+    <ng-template #loginMsg>
+      <p class="login-warning">Morate se <a routerLink="/login">prijaviti</a> da biste komentirali.</p>
+    </ng-template>
+  </section>
+</div>
